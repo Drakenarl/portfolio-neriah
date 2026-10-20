@@ -1,0 +1,61 @@
+.pied {
+  overflow: hidden;
+  padding: 96px var(--marge) 32px;
+  background: rgb(var(--encre));
+  color: rgb(var(--papier));
+}
+
+.pied-haut {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.pied-fin {
+  margin: 0;
+  color: rgb(var(--ciel));
+  font-size: 32px;
+}
+
+.pied-nom-complet {
+  margin: 8px 0 0;
+  color: rgb(var(--papier) / 0.6);
+}
+
+.pied-liens {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 22px;
+}
+
+.pied a {
+  text-decoration: none;
+  transition: color var(--duree-survol) var(--courbe-etat);
+}
+
+.pied a:hover {
+  color: rgb(var(--beni));
+}
+
+/* Le nom tient toute la largeur, comme la tranche d'un volume. */
+.pied-marque {
+  margin: 64px 0 24px;
+  font-size: 33vw;
+  line-height: 0.78;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pied-bas {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(var(--papier) / 0.25);
+  color: rgb(var(--papier) / 0.6);
+  font-size: 16px;
+}

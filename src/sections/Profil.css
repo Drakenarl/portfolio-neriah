@@ -1,0 +1,93 @@
+.profil {
+  padding: 160px var(--marge) 120px;
+}
+
+/* Titre à gauche, trois paragraphes à droite. */
+.profil-tete {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  margin-bottom: 96px;
+}
+
+.profil-titre {
+  margin: 0;
+  font-size: clamp(44px, 6vw, 96px);
+}
+
+.profil-textes {
+  display: grid;
+  gap: 24px;
+  align-content: end;
+  font-size: 21px;
+}
+
+.profil-textes p {
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* Une case de manga : bordure épaisse, coins nets, et l'image qui déborde
+   légèrement à l'intérieur pour la parallaxe. */
+.profil-case {
+  position: relative;
+  margin: 0;
+  border: 4px solid rgb(var(--encre));
+  aspect-ratio: 1600 / 847;
+  overflow: hidden;
+  background: rgb(var(--papier));
+}
+
+.profil-plan {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.profil-trame,
+.profil-dessin {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profil-trame {
+  opacity: 0;
+}
+
+.profil-dessin path {
+  fill: rgb(var(--encre));
+  fill-opacity: 0;
+  stroke: rgb(var(--encre));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.profil-legende {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 8px 16px;
+  border-top: 3px solid rgb(var(--encre));
+  border-left: 3px solid rgb(var(--encre));
+  background: rgb(var(--papier));
+  font-size: 17px;
+}
+
+@media (max-width: 720px) {
+  .profil {
+    padding: 96px var(--marge) 72px;
+  }
+
+  .profil-tete {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .profil-case {
+    aspect-ratio: 4 / 3;
+  }
+}

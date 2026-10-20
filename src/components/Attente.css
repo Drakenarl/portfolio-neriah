@@ -1,0 +1,64 @@
+/* Les lattes et le voile couvrent la page dès le premier rendu : c'est la
+   feuille, pas le script, qui pose l'état de départ. */
+.attente {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.en-attente body {
+  overflow: hidden;
+}
+
+.attente-lattes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+/* Chaque latte déborde d'un pixel : sans ce recouvrement, l'arrondi des
+   largeurs fractionnaires laisse passer des fils de papier entre elles. */
+.attente-latte {
+  flex: 1;
+  margin-right: -1px;
+  background: rgb(var(--encre));
+  transform-origin: right;
+}
+
+.attente-voile {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 24px;
+  background: rgb(var(--encre));
+}
+
+.attente-marque {
+  width: clamp(72px, 9vw, 120px);
+  height: auto;
+}
+
+.attente-marque path {
+  fill-opacity: 0;
+}
+
+.attente-trait--papier {
+  fill: rgb(var(--papier));
+  stroke: rgb(var(--papier));
+}
+
+.attente-trait--beni {
+  fill: rgb(var(--beni));
+  stroke: rgb(var(--beni));
+}
+
+.attente-legende {
+  margin: 0;
+  color: rgb(var(--papier) / 0.6);
+  font-family: var(--police-texte);
+  font-size: 18px;
+  font-style: italic;
+}

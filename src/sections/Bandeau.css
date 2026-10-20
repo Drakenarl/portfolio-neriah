@@ -1,0 +1,49 @@
+.bandeau {
+  display: grid;
+  gap: 8px;
+  overflow: hidden;
+  padding: 96px 0;
+  border-block: 3px solid rgb(var(--encre));
+  background: var(--trame), rgb(var(--papier));
+}
+
+.bandeau-ligne {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.bandeau-tour {
+  display: flex;
+}
+
+.bandeau-mot {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 24px;
+  font-size: clamp(48px, 8vw, 128px);
+  white-space: nowrap;
+}
+
+/* Un mot sur deux en creux : la trame passe à travers la lettre. */
+.bandeau-creux {
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(var(--encre));
+}
+
+.bandeau-fleche {
+  width: 0.6em;
+  height: auto;
+  fill: none;
+  stroke: rgb(var(--beni));
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+  .bandeau {
+    padding: 56px 0;
+  }
+}

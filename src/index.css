@@ -1,0 +1,201 @@
+@import './assets/polices/anton.css';
+@import './assets/polices/instrument-serif.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Les jetons. Le site est un volume de manga : du papier, de l'encre, et une
+ * seule couleur qui ose. Chaque couleur a un rôle et un seul.
+ *
+ *   papier  le fond des pages claires, un crème de papier journal, jamais du blanc
+ *   encre   le texte et les traits, presque noir, jamais du noir pur
+ *   gris    le seul gris, pour le texte secondaire
+ *   beni    le rose carmin des actions : ce qui se clique, et rien d'autre
+ *   nuit    l'indigo des chapitres de nuit, en grands aplats
+ *   ciel    le rose du crépuscule, réservé aux surfaces posées sur la nuit
+ *
+ * Les valeurs sont en triplets RGB pour que Tailwind et les feuilles des
+ * sections puissent baisser l'opacité de la même teinte au lieu d'en inventer
+ * une seconde.
+ */
+:root {
+  --papier: 242 237 228;
+  --encre: 20 18 22;
+  --gris: 110 106 112;
+  --beni: 214 40 82;
+  --nuit: 22 24 48;
+  --ciel: 246 178 168;
+
+  --police-titre: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --police-texte: 'Instrument Serif', Georgia, serif;
+
+  /* Une courbe pour le projet, deux pour les cas qu'elle ne couvre pas. */
+  --courbe: cubic-bezier(0.16, 1, 0.3, 1);
+  --courbe-etat: cubic-bezier(0.4, 0, 0.2, 1);
+  --courbe-panneau: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --duree-survol: 150ms;
+  --duree-etat: 250ms;
+  --duree-entree: 600ms;
+  --duree-longue: 1400ms;
+
+  /* La trame des cases : des points d'encre, comme une trame mécanique. */
+  --trame: radial-gradient(rgb(var(--encre) / 0.22) 0.9px, transparent 1.1px) 0 0 / 6px 6px;
+
+  /* La marge des pages, sur l'échelle de 8 : 16 au téléphone, 48 au bureau. */
+  --marge: clamp(16px, 4vw, 48px);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: rgb(var(--papier));
+}
+
+/* Lenis prend la main sur le défilement : sans ces deux règles, une ancre ou
+   un `scrollTo` se battent avec lui. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  margin: 0;
+  isolation: isolate;
+  background: rgb(var(--papier));
+  color: rgb(var(--encre));
+  font-family: var(--police-texte);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Le grain du papier : fixe, sous tout le
+   contenu, si bien que les planches et les images restent nettes. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0 0.09 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: rgb(var(--beni));
+  color: rgb(var(--papier));
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--beni));
+  outline-offset: 4px;
+}
+
+.titre {
+  font-family: var(--police-titre);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.italique {
+  font-family: var(--police-texte);
+  font-style: italic;
+}
+
+/* Deux boutons, deux poids : un plein en encre, un en contour. Le rose vient
+   au survol, parce que c'est lui qui dit « ça se clique ». */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 2px solid rgb(var(--encre));
+  font-family: var(--police-titre);
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color var(--duree-survol) var(--courbe-etat),
+    border-color var(--duree-survol) var(--courbe-etat),
+    color var(--duree-survol) var(--courbe-etat),
+    transform var(--duree-survol) var(--courbe-etat);
+}
+
+.bouton--plein {
+  background: rgb(var(--encre));
+  color: rgb(var(--papier));
+}
+
+.bouton--contour {
+  background: transparent;
+  color: rgb(var(--encre));
+}
+
+.bouton:hover {
+  border-color: rgb(var(--beni));
+  background: rgb(var(--beni));
+  color: rgb(var(--papier));
+}
+
+.bouton:active {
+  transform: translateY(1px);
+}
+
+.bouton .fleche {
+  transition: transform var(--duree-etat) var(--courbe);
+}
+
+.bouton:hover .fleche {
+  transform: translateX(4px);
+}
+
+/* Sur la nuit, l'encre ne se voit plus : les boutons passent au papier. */
+.sur-nuit .bouton {
+  border-color: rgb(var(--papier));
+}
+
+.sur-nuit .bouton--plein {
+  background: rgb(var(--papier));
+  color: rgb(var(--encre));
+}
+
+.sur-nuit .bouton--contour {
+  color: rgb(var(--papier));
+}
+
+.sur-nuit .bouton:hover {
+  border-color: rgb(var(--beni));
+  background: rgb(var(--beni));
+  color: rgb(var(--papier));
+}
+
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
